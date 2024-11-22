@@ -1,0 +1,68 @@
+# Julia package specific
+*.jl.cov
+*.jl.*.cov
+*.jl.mem
+/Manifest.toml
+/docs/build/
+/docs/site/
+
+# Build artifacts
+/deps/builds/
+/deps/usr/
+/deps/build/
+/deps/downloads/
+/deps/src/builds
+/deps/deps.jl
+*.so
+*.dylib
+*.dll
+*.a
+*.o
+
+# CMake build directories
+/build/
+/debug/
+/release/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+CTestTestfile.cmake
+*.cmake
+!cmake/*.cmake
+
+# Generated files
+*.gen.*
+*.mod
+*.mod.*
+*.order
+
+# Editor and IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.vs/
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+*.temp
+*.log
+
+# System specific
+.directory
+Thumbs.db
+
+# Test outputs
+/test/tmp/
+test-results/
