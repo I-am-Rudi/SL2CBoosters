@@ -1,7 +1,4 @@
 using CMake
-using Downloads
-using Tar
-using CodecZlib
 
 # Get the package root directory (parent of deps)
 const package_root = dirname(@__DIR__)
@@ -24,7 +21,7 @@ end
 mkpath(builddir)
 mkpath(libdir)
 
-# Run CMake configuration with correct source directory path
+# Run CMake configuration
 cmake_args = [
     "-DCMAKE_INSTALL_PREFIX=$prefix",
     "-DCMAKE_BUILD_TYPE=Release",
