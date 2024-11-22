@@ -81,19 +81,8 @@ Pkg.develop(Pkg.PackageSpec(name="SL2CBoosters", url="https://github.com/I-am-Ru
 Pkg.build("SL2CBoosters", verbose=true)
 ```
 
-## Common Issues
+- if problems persist you might have to remove `.julia/dev/SL2CBoosters`
 
-- If you get library loading errors, ensure all system dependencies are properly installed
-- For Windows users, verify that MSYS2's bin directory is in your system PATH
-- For macOS users with Apple Silicon, ensure you're using the ARM64 version of Julia
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
 
 ## License
 
@@ -129,10 +118,3 @@ Symbols Using Prime Factorization and Multiword Integer Arithmetic},
 
 cmake implementation of wigxjpf: `https://github.com/cheshyre/wigxjpf-cmake/blob/main/README.md`
 
-## Contact
-
-[Your contact information or how to reach the maintainers]
-
-## Acknowledgments
-
-- [List any acknowledgments, contributors, or related projects]
