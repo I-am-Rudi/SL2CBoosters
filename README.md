@@ -1,164 +1,138 @@
-# SL2CBoosters Installation Guide
+# SL2CBoosters.jl
 
-SL2CBoosters is a Julia package that provides C-based computation of SL(2,C) boosters. This guide covers installation on various operating systems.
+A Julia package for computing SL(2,C) boosters, providing efficient C-based calculations with a Julia interface.
 
-## Prerequisites
+## Installation
 
-You need to have Julia (version 1.6 or higher) installed on your system. You can download it from [https://julialang.org/downloads/](https://julialang.org/downloads/).
+### Prerequisites
 
-### Ubuntu/Debian-based Systems
+Before installing the package, make sure you have the following system dependencies:
 
-1. Install system dependencies:
+#### Ubuntu/Debian
 ```bash
 sudo apt update
 sudo apt install build-essential cmake libgmp-dev libmpfr-dev libmpc-dev
 ```
 
-2. Install the package:
-```julia
-using Pkg
-Pkg.add(PackageSpec(url="https://github.com/I-am-Rudi/SL2CBoosters.git", rev="main", submodules=true)) # Replace with actual repo URL
-```
-
-Or for local development:
-```julia
-using Pkg
-Pkg.develop(path="/path/to/SL2CBoosters")
-```
-
-### Arch Linux/Manjaro
-
-1. Install system dependencies:
+#### Arch Linux/Manjaro
 ```bash
 sudo pacman -S base-devel cmake gmp mpfr libmpc
 ```
 
-2. Install the package:
-```julia
-using Pkg
-Pkg.add(PackageSpec(url="https://github.com/I-am-Rudi/SL2CBoosters.git", rev="main", submodules=true)) # Replace with actual repo URL
-```
-
-Or for local development:
-```julia
-using Pkg
-Pkg.develop(path="/path/to/SL2CBoosters")
-```
-
-### macOS
-
-1. Install dependencies using Homebrew:
+#### macOS
 ```bash
-# Install Homebrew if you haven't already
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-# Install dependencies
 brew install cmake gmp mpfr libmpc
 ```
 
-2. Install the package:
+#### Windows
+1. Install [MSYS2](https://www.msys2.org/)
+2. Open MSYS2 MinGW64 shell and run:
+```bash
+pacman -Syu
+pacman -S mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake mingw-w64-x86_64-gmp mingw-w64-x86_64-mpfr mingw-w64-x86_64-mpc
+```
+3. Add `C:\msys64\mingw64\bin` to your system PATH
+
+### Package Installation
+
+Install the package directly from GitHub:
 ```julia
-using Pkg
-Pkg.add(PackageSpec(url="https://github.com/I-am-Rudi/SL2CBoosters.git", rev="main", submodules=true)) # Replace with actual repo URL
+import Pkg
+Pkg.develop(Pkg.PackageSpec(name="SL2CBoosters", url="https://github.com/I-am-Rudi/SL2CBoosters.git"))
 ```
 
-Or for local development:
-```julia
-using Pkg
-Pkg.develop(path="/path/to/SL2CBoosters")
-```
-
-### Windows
-
-1. Install dependencies:
-   - Install [MSYS2](https://www.msys2.org/) following their installation guide
-   - Open MSYS2 MinGW 64-bit terminal and install dependencies:
-   ```bash
-   pacman -Syu
-   pacman -S mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake mingw-w64-x86_64-gmp mingw-w64-x86_64-mpfr mingw-w64-x86_64-mpc
-   ```
-
-2. Add MSYS2's MinGW bin directory to your system PATH:
-   - Navigate to System Properties -> Advanced -> Environment Variables
-   - Add `C:\msys64\mingw64\bin` to your system PATH
-
-3. Install the package:
-   - Open Julia and run:
-   ```julia
-   using Pkg
-   Pkg.add(PackageSpec(url="https://github.com/I-am-Rudi/SL2CBoosters.git", rev="main", submodules=true)) # Replace with actual repo URL
-   ```
-
-   Or for local development:
-   ```julia
-   using Pkg
-   Pkg.develop(path="C:\\path\\to\\SL2CBoosters")
-   ```
-
-## Verifying Installation
-
-To verify that the installation was successful, run:
+## Usage
 
 ```julia
 using SL2CBoosters
+
+# Example usage code here
 ```
 
-If no errors appear, the installation was successful.
+## Development
 
-## Common Issues
-
-### Missing Libraries
-If you get an error about missing libraries, ensure all dependencies are installed and that your system's library path includes the installation directories.
-
-### Build Failures
-If the build fails, try:
-```julia
-import Pkg
-Pkg.build("SL2CBoosters", verbose=true)
-```
-This will show detailed build output to help diagnose the issue.
-
-### Windows-specific Issues
-- If you get "command not found" errors, ensure MSYS2's bin directory is in your PATH
-- If you get DLL load errors, ensure all MSYS2 dependencies are installed and the bin directory is in your PATH
-
-### macOS-specific Issues
-- If using Apple Silicon (M1/M2), ensure you're using the ARM64 version of Julia
-- If Homebrew is installed in a non-standard location, you may need to set `HOMEBREW_PREFIX` environment variable
-
-## Development Setup
-
-For development:
+For local development:
 
 1. Clone the repository:
 ```bash
 git clone https://github.com/I-am-Rudi/SL2CBoosters.git
-cd SL2CBoosters.jl
+cd SL2CBoosters
 ```
 
-2. Activate the development environment:
+2. Set up local development:
 ```julia
-using Pkg
+import Pkg
 Pkg.develop(path=".")
 ```
 
-3. Run tests:
+## Troubleshooting
+
+If you encounter build issues:
+
+1. Clean and rebuild:
 ```julia
-Pkg.test("SL2CBoosters")
-```
-
-## Updating
-
-To update to the latest version:
-```julia
-using Pkg
-Pkg.update("SL2CBoosters")
-```
-
-## Uninstallation
-
-To remove the package:
-```julia
-using Pkg
+import Pkg
 Pkg.rm("SL2CBoosters")
+Pkg.develop(Pkg.PackageSpec(name="SL2CBoosters", url="https://github.com/I-am-Rudi/SL2CBoosters.git"))
 ```
+
+2. For verbose build output:
+```julia
+Pkg.build("SL2CBoosters", verbose=true)
+```
+
+## Common Issues
+
+- If you get library loading errors, ensure all system dependencies are properly installed
+- For Windows users, verify that MSYS2's bin directory is in your system PATH
+- For macOS users with Apple Silicon, ensure you're using the ARM64 version of Julia
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+Inhgerited from SL2CFOAM-NEXT
+
+SL2CBOOSTERS is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+SL2CBOOSTERS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License along with SL2CBOOSTERS. If not, see http://www.gnu.org/licenses/.
+
+If you use the library, cite the following paper: "Francesco Gozzini, A high-performance code for EPRL spin foam amplitudes, Class. Quantum Grav. 38, 225010, doi:10.1088/1361-6382/ac2b0b."
+
+## Citations
+
+Francesco Gozzini, A high-performance code for EPRL spin foam amplitudes, Class. Quantum Grav. 38, 225010, doi:10.1088/1361-6382/ac2b0b."
+
+```
+@article{johansson2016,
+   author = {H. T. Johansson and C. Forss\’en},
+    title = {Fast and Accurate Evaluation of Wigner 3\$j\$, 6\$j\$, and 9\$j\$
+Symbols Using Prime Factorization and Multiword Integer Arithmetic},
+  journal = {SIAM Journal on Scientific Computing},
+   volume = {38},
+   number = {1},
+    pages = {A376-A384},
+     year = {2016},
+      doi = {10.1137/15M1021908},
+      URL = {http://dx.doi.org/10.1137/15M1021908},
+   eprint = {http://dx.doi.org/10.1137/15M1021908}
+}
+```
+
+cmake implementation of wigxjpf: `https://github.com/cheshyre/wigxjpf-cmake/blob/main/README.md`
+
+## Contact
+
+[Your contact information or how to reach the maintainers]
+
+## Acknowledgments
+
+- [List any acknowledgments, contributors, or related projects]
