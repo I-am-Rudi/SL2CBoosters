@@ -1,0 +1,1 @@
+/usr/bin/cc -fPIC -O3 -DNDEBUG -shared -Wl,-soname,libwigxjpf_quadmath.so -o libwigxjpf_quadmath.so CMakeFiles/wigxjpf_quadmath.dir/calc_float128.c.o CMakeFiles/wigxjpf_quadmath.dir/c_wrap_float128.c.o  -Wl,-rpath,/home/rudi/Documents/Uni/Courses-Master/Master_Thesis/Code/test/SL2CBoosters/deps/build/ext/wigxjpf/src: libwigxjpf.so -lm -lquadmath

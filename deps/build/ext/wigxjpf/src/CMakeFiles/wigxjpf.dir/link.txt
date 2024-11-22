@@ -1,0 +1,1 @@
+/usr/bin/cc -fPIC -O3 -DNDEBUG -shared -Wl,-soname,libwigxjpf.so -o libwigxjpf.so CMakeFiles/wigxjpf.dir/prime_factor.c.o CMakeFiles/wigxjpf.dir/calc.c.o CMakeFiles/wigxjpf.dir/trivial_zero.c.o CMakeFiles/wigxjpf.dir/c_wrap.c.o CMakeFiles/wigxjpf.dir/fortran_wrap.c.o CMakeFiles/wigxjpf.dir/wigxjpf_error.c.o  -lm

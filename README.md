@@ -1,77 +1,170 @@
-# SL2Cfoam-next
+# SL2CBoosters Installation Guide
 
-*A high performance code for EPRL spin foam amplitudes*
+SL2CBoosters is a Julia package that provides C-based computation of SL(2,C) boosters. This guide covers installation on various operating systems.
 
-**SL2Cfoam-next** is a library for computing spin foam amplitudes of covariant Loop Quantum Gravity. The library is optimized for computing the Lorentzian EPRL vertex amplitude [Engle et al., 2008] for all possible boundary intertwiners at fixed boundary spins. The amplitudes are stored in 5-dimensional arrays of double-precision numbers and can be manipulated using the provided C bindings or a convenient Julia module.
+## Prerequisites
 
-## Quickstart
-To start computing spin foam amplitudes immediately, follow the new [quickstart guide](QUICKSTART.md).
+You need to have Julia (version 1.6 or higher) installed on your system. You can download it from [https://julialang.org/downloads/](https://julialang.org/downloads/).
 
-## Features
+### Ubuntu/Debian-based Systems
 
-The computation uses the EPRL splitting introduced in [Speziale, 2017]. In particular, the library splits the amplitude in the computation of: _(i)_ SU(2) recoupling symbols; _(ii)_ SL(2,C) dipole amplitudes (_boosters_) and _(iii)_ shelled sums. The library exports methods to compute:
+1. Install system dependencies:
+```bash
+sudo apt update
+sudo apt install build-essential cmake libgmp-dev libmpfr-dev libmpc-dev
+```
 
-- Lorentzian EPRL vertex amplitudes as tensors
-- BF vertex amplitudes as tensors
-- booster coefficients as tensors
-- Livine-Speziale coherent state coefficients as vectors
+2. Install the package:
+```julia
+using Pkg
+Pkg.add("https://github.com/your-username/SL2CBoosters.jl")  # Replace with actual repo URL
+```
 
-The Julia interface implements all these methods as well as additional methods for contracting vertex tensors with coherent states and offloading the contractions to the GPU. Two additional tools are provided as standalone programs to compute a single amplitude and to store a full vertex tensor.
+Or for local development:
+```julia
+using Pkg
+Pkg.develop(path="/path/to/SL2CBoosters")
+```
 
-## Dependencies
+### Arch Linux/Manjaro
 
-The library depends on:
+1. Install system dependencies:
+```bash
+sudo pacman -S base-devel cmake gmp mpfr libmpc
+```
 
-1. GNU GMP, MPFR, MPC
-2. quadmath (GCC extension)
-3. _wigxjpf_ and _fastwigxj_ [Johansson et al., 2015]
-4. OpenMP
-5. a BLAS implementation
-6. OpenMPI (optional)
-7. Julia >= 1.5 (optional)
-8. Julia modules: HalfIntegers, CUDA (optional)
+2. Install the package:
+```julia
+using Pkg
+Pkg.add("https://github.com/your-username/SL2CBoosters.jl")  # Replace with actual repo URL
+```
 
-## Compilation
+Or for local development:
+```julia
+using Pkg
+Pkg.develop(path="/path/to/SL2CBoosters")
+```
 
-The library can be compiled by typing `make`. This compiles the shared library, the test programs and the library tools. There are additional flags that can be provided. For example:
+### macOS
 
-- type `make BLAS=mkl/blasfeo/system` to choose between different BLAS libraries [Frison et al., 2018] (default is MKL)
-- type `make DEBUG=1` to build the debug version
-- type `make MPI=1` to build the MPI version
-- type `make OMP=0` to disable builtin OpenMP parallelization
+1. Install dependencies using Homebrew:
+```bash
+# Install Homebrew if you haven't already
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-The previous flags can be combined. The library searches for folders `wigxjpf`, `fastwigxj` and `blasfeo` (optional) under `ext/`. The variable `MKLROOT` must be set for compiling with MKL. The library has been tested with GCC version 8.1 or greater.
+# Install dependencies
+brew install cmake gmp mpfr libmpc
+```
 
-You can provide flags for GCC or the linker using the option `ADD_CFLAGS=...` after `make`. This can be used for example for providing a different definition of the Y-map. The default definition sets the irrep continuous label to `Immirzi * (j+1)`. Compiling with `ADD_CFLAGS=-DRHO_GJ` sets the Y-map to `Immirzi * j`.
+2. Install the package:
+```julia
+using Pkg
+Pkg.add("https://github.com/your-username/SL2CBoosters.jl")  # Replace with actual repo URL
+```
 
-## Usage (C interface)
+Or for local development:
+```julia
+using Pkg
+Pkg.develop(path="/path/to/SL2CBoosters")
+```
 
-See `inc/sl2cfoam.h`.
+### Windows
 
-## Usage (Julia interface)
+1. Install dependencies:
+   - Install [MSYS2](https://www.msys2.org/) following their installation guide
+   - Open MSYS2 MinGW 64-bit terminal and install dependencies:
+   ```bash
+   pacman -Syu
+   pacman -S mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake mingw-w64-x86_64-gmp mingw-w64-x86_64-mpfr mingw-w64-x86_64-mpc
+   ```
 
-To use the Julia interface the module `SL2Cfoam` must be imported. You must init the C library calling `SL2Cfoam.cinit(...)` providing:
+2. Add MSYS2's MinGW bin directory to your system PATH:
+   - Navigate to System Properties -> Advanced -> Environment Variables
+   - Add `C:\msys64\mingw64\bin` to your system PATH
 
-1. a root folder with fastwigxj tables (one file with extension `.6j` and one with `.3j`)
-2. the Immirzi parameter (can be later changed at runtime)
-3. a `SL2Cfoam.Config` object with additional configuration
+3. Install the package:
+   - Open Julia and run:
+   ```julia
+   using Pkg
+   Pkg.add("https://github.com/your-username/SL2CBoosters.jl")  # Replace with actual repo URL
+   ```
 
-When finished call `SL2Cfoam.cclear()`. To compute a vertex tensor call `vertex_compute(...)` providing a list of 10 spins, the number of shells (from 0 to 50) and optionally a range of intertwiners. You can load vertex tensors computed with the C library calling `vertex_load(...)`. You can compute coherent states coefficients calling `coherentstates_compute(...)`. You can contract a vertex tensor with 1 to 5 coherent states coefficients using `contract(v, cs...)`. See `julia/SL2Cfoam.jl` for more functions and details. For GPU offloading you must load the additional modules `SL2CfoamGPU` and `CUDA`.
+   Or for local development:
+   ```julia
+   using Pkg
+   Pkg.develop(path="C:\\path\\to\\SL2CBoosters")
+   ```
 
-## License
+## Verifying Installation
 
-SL2CFOAM-NEXT is free software: you can redistribute it and/or modify 
-it under the terms of the GNU Lesser General Public License as
-published by the Free Software Foundation, either version 3 of the
-License, or (at your option) any later version.
+To verify that the installation was successful, run:
 
-SL2CFOAM-NEXT is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-See the GNU Lesser General Public License for more details.
- 
-You should have received a copy of the GNU Lesser General Public License
-along with SL2CFOAM-NEXT. If not, see <http://www.gnu.org/licenses/>.
+```julia
+using SL2CBoosters
+```
 
-If you use the library, cite the following paper: "Francesco Gozzini, *A high-performance code for EPRL spin foam amplitudes*, Class. Quantum Grav. 38, 225010, doi:10.1088/1361-6382/ac2b0b." 
+If no errors appear, the installation was successful.
 
+## Common Issues
+
+### Missing Libraries
+If you get an error about missing libraries, ensure all dependencies are installed and that your system's library path includes the installation directories.
+
+### Build Failures
+If the build fails, try:
+```julia
+import Pkg
+Pkg.build("SL2CBoosters", verbose=true)
+```
+This will show detailed build output to help diagnose the issue.
+
+### Windows-specific Issues
+- If you get "command not found" errors, ensure MSYS2's bin directory is in your PATH
+- If you get DLL load errors, ensure all MSYS2 dependencies are installed and the bin directory is in your PATH
+
+### macOS-specific Issues
+- If using Apple Silicon (M1/M2), ensure you're using the ARM64 version of Julia
+- If Homebrew is installed in a non-standard location, you may need to set `HOMEBREW_PREFIX` environment variable
+
+## Development Setup
+
+For development:
+
+1. Clone the repository:
+```bash
+git clone https://github.com/your-username/SL2CBoosters.jl.git
+cd SL2CBoosters.jl
+```
+
+2. Activate the development environment:
+```julia
+using Pkg
+Pkg.develop(path=".")
+```
+
+3. Run tests:
+```julia
+Pkg.test("SL2CBoosters")
+```
+
+## Updating
+
+To update to the latest version:
+```julia
+using Pkg
+Pkg.update("SL2CBoosters")
+```
+
+## Uninstallation
+
+To remove the package:
+```julia
+using Pkg
+Pkg.rm("SL2CBoosters")
+```
+
+## Support
+
+If you encounter any issues not covered in this guide, please:
+1. Check the [Issues](https://github.com/your-username/SL2CBoosters.jl/issues) page
+2. Open a new issue if your problem hasn't been reported

@@ -1,0 +1,3 @@
+[submodule "ext/wigxjpf"]
+	path = ext/wigxjpf
+	url = https://github.com/cheshyre/wigxjpf-cmake.git

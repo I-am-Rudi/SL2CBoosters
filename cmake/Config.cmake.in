@@ -1,0 +1,4 @@
+@PACKAGE_INIT@
+
+include("${CMAKE_CURRENT_LIST_DIR}/SL2CBoostersTargets.cmake")
+check_required_components(SL2CBoosters)
