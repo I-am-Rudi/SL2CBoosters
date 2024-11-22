@@ -3,6 +3,7 @@ module SL2CBoosters
 using HalfIntegers
 using LinearAlgebra
 using Libdl
+using Pkg
 
 export Spin, dim, intertwiner_range,
        VerbosityOff, LowVerbosity, HighVerbosity,
@@ -24,6 +25,44 @@ const libdir = joinpath(depsdir, "lib")
 # Define library paths
 const libsl2c = joinpath(libdir, "libsl2cboosters.so")
 const libwigxjpf = joinpath(libdir, "libwigxjpf.so")
+
+
+function configure_mpfr()
+    # Common locations for system MPFR
+    mpfr_paths = [
+        "/usr/lib/libmpfr.so",
+        "/usr/lib64/libmpfr.so",
+        "/usr/local/lib/libmpfr.so"
+    ]
+    
+    # Find the first available MPFR library
+    mpfr_lib = nothing
+    for path in mpfr_paths
+        if isfile(path)
+            mpfr_lib = path
+            break
+        end
+    end
+    
+    if isnothing(mpfr_lib)
+        error("Could not find system MPFR library")
+    end
+    
+    # Pre-load the system MPFR library
+    try
+        handle = dlopen(mpfr_lib)
+        # Store the handle in a global variable to prevent it from being GC'd
+        global _MPFR_HANDLE = handle
+        println("Successfully loaded system MPFR from: $mpfr_lib")
+        
+        # Optionally verify specific symbols are available
+        if dlsym(handle, :mpfr_set_float128; throw_error=false) == nothing
+            @warn "mpfr_set_float128 symbol not found in loaded library"
+        end
+    catch e
+        error("Failed to load MPFR library: $e")
+    end
+end
 
 function __init__()
     # Add our lib directory to the DL_LOAD_PATH
@@ -50,6 +89,8 @@ function __init__()
     if sl2c_handle == C_NULL
         error("Failed to load sl2cboosters: $(Libdl.dlerror())")
     end
+    
+    configure_mpfr()
 end
 ###################################################################
 # Spin functions.
