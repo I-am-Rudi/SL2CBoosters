@@ -17,7 +17,7 @@ sudo apt install build-essential cmake libgmp-dev libmpfr-dev libmpc-dev
 2. Install the package:
 ```julia
 using Pkg
-Pkg.add("https://github.com/your-username/SL2CBoosters.jl")  # Replace with actual repo URL
+Pkg.add(PackageSpec(url="https://github.com/I-am-Rudi/SL2CBoosters.git", rev="main", submodules=true)) # Replace with actual repo URL
 ```
 
 Or for local development:
@@ -36,7 +36,7 @@ sudo pacman -S base-devel cmake gmp mpfr libmpc
 2. Install the package:
 ```julia
 using Pkg
-Pkg.add("https://github.com/your-username/SL2CBoosters.jl")  # Replace with actual repo URL
+Pkg.add(PackageSpec(url="https://github.com/I-am-Rudi/SL2CBoosters.git", rev="main", submodules=true)) # Replace with actual repo URL
 ```
 
 Or for local development:
@@ -59,7 +59,7 @@ brew install cmake gmp mpfr libmpc
 2. Install the package:
 ```julia
 using Pkg
-Pkg.add("https://github.com/your-username/SL2CBoosters.jl")  # Replace with actual repo URL
+Pkg.add(PackageSpec(url="https://github.com/I-am-Rudi/SL2CBoosters.git", rev="main", submodules=true)) # Replace with actual repo URL
 ```
 
 Or for local development:
@@ -86,7 +86,7 @@ Pkg.develop(path="/path/to/SL2CBoosters")
    - Open Julia and run:
    ```julia
    using Pkg
-   Pkg.add("https://github.com/your-username/SL2CBoosters.jl")  # Replace with actual repo URL
+   Pkg.add(PackageSpec(url="https://github.com/I-am-Rudi/SL2CBoosters.git", rev="main", submodules=true)) # Replace with actual repo URL
    ```
 
    Or for local development:
@@ -132,7 +132,7 @@ For development:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-username/SL2CBoosters.jl.git
+git clone https://github.com/I-am-Rudi/SL2CBoosters.git
 cd SL2CBoosters.jl
 ```
 
@@ -162,9 +162,3 @@ To remove the package:
 using Pkg
 Pkg.rm("SL2CBoosters")
 ```
-
-## Support
-
-If you encounter any issues not covered in this guide, please:
-1. Check the [Issues](https://github.com/your-username/SL2CBoosters.jl/issues) page
-2. Open a new issue if your problem hasn't been reported
